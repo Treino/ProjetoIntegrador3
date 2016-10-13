@@ -1,0 +1,78 @@
+﻿@model PROJETO3.Models.EventoViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Novo Evento";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Evento</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.descricao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.descricao)
+                @Html.ValidationMessageFor(model => model.descricao)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.data, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.data)
+                @Html.ValidationMessageFor(model => model.data)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.codTipoEvento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TipoEvento")
+                @*Html.DropDownListFor(model => model.codTipoEvento, null, "Defina o Tipo de Evento")*@
+                @Html.ValidationMessageFor(model => model.codTipoEvento)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.codStatus, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.codStatus)
+                @Html.ValidationMessageFor(model => model.codStatus)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.identificador, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.identificador)
+                @Html.ValidationMessageFor(model => model.identificador)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.codAssunto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.codAssunto, null, "Assunto associado ao evento")
+                @Html.ValidationMessageFor(model => model.codAssunto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cadastrar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

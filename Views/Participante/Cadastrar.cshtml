@@ -1,0 +1,61 @@
+﻿@model PROJETO3.Models.ParticipanteViewModel
+
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>PARTICIPANTE</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nmParticipante, new { @class = "control-label col-md-2" })
+         <div class="col-md-10">
+                @Html.EditorFor(model => model.nmParticipante)
+                @Html.ValidationMessageFor(model => model.nmParticipante)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.codCurso, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.codCurso, null, "Escolha um Curso")
+                @Html.ValidationMessageFor(model => model.codCurso)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email)
+                @Html.ValidationMessageFor(model => model.email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.senha, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.senha)
+                @Html.ValidationMessageFor(model => model.senha)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cadastrar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,64 @@
+﻿@model PROJETO3.Models.Participante
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>DELETAR</h2>
+
+<h3>TEM CERTEZA QUE GOSTARIA DE DELETAR ?</h3>
+<div>
+    <h4>Participante</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nmParticipante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nmParticipante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso.nmCurso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso.nmCurso)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="DELETAR" class="btn btn-default" /> |
+            @Html.ActionLink("RETORNAR À LISTA", "Index")
+        </div>
+    }
+</div>

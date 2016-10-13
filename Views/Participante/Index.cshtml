@@ -1,0 +1,54 @@
+﻿@model IEnumerable<PROJETO3.Models.Participante>
+
+@{
+    ViewBag.Title = "Lista de participantes";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@{using (Html.BeginForm())
+    {
+        <input type="text" name="pesquisa" />
+        <input type="submit" class="btn-default btn-info" value="Pesquisar" />
+    }
+}
+<br />
+
+<p>
+    @Html.ActionLink("Cadastrar um Novo Participante", "Cadastrar", "Participante", null, new { @class = "btn btn-primary btn-large" })
+</p>
+
+@{
+    if (Model.Count() > 0)
+    {
+        var grid = new WebGrid(canPage: true, rowsPerPage: 10, canSort: true, ajaxUpdateContainerId: "gridPart");
+        grid.Bind(Model, rowCount: Model.ToList().Count(), autoSortAndPage: true);
+        grid.Pager(mode: WebGridPagerModes.All,
+            firstText: "<< Primeiro", lastText: "Último >>",
+            previousText: "< Anterior", nextText: "Próximo >",
+            numericLinksCount: 10);
+        @grid.GetHtml(htmlAttributes: new { id = "gridPart" },
+             tableStyle: "table table-bordered table-hover",
+             headerStyle: "webgrid-header",
+             footerStyle: "webgrid-footer text-center",
+             alternatingRowStyle: "webgrid-alternating-row",
+             selectedRowStyle: "webgrid-selected-row",
+             rowStyle: "webgrid-row-style",
+             displayHeader: true,
+             columns: grid.Columns(
+             grid.Column(columnName: "nmParticipante", header: "Participante", format: null, style: "Destaque", canSort: true),
+             grid.Column(columnName: "email", header: "E-mail", format: null, style: "Destaque", canSort: true),
+             grid.Column(columnName: "ativo", header: "Ativo", format: (item) => item.ativo ? "S" : "N", canSort: true),
+             grid.Column(columnName: "Curso.nmCurso", header: "Curso", format: null, style: null, canSort: true),
+             grid.Column(header: "Ações", canSort: false, style: "action  col-lg-2",
+                format: (item) => new HtmlString("<a href=" + @Url.Action("Detalhes", new { id = item.codParticipante }) + " title='Detalhes' ><i class='glyphicon glyphicon-search'> </i><span class='sr-only'>Detalhes</span> </a> "
+                + " <a href=" + @Url.Action("Editar", new { id = item.codParticipante }) + "><i class='glyphicon glyphicon-edit'></i><span class='sr-only'>Editar</span> </a> "
+                + " <a href=" + @Url.Action("Deletar", new { id = item.codParticipante }) + "><i class='glyphicon glyphicon-trash'> </i> </a> ")
+              )
+             ));
+    }
+    else
+    {
+        <p class="alert-danger">Não há registros para a pesquisa selecionada.</p>
+    }
+}

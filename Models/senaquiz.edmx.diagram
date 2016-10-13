@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="49ae9ac7b1da49008bbf4311bca74139" Name="Diagram1">
+        <EntityTypeShape EntityType="senaquizModel.Alternativa" Width="1.5" PointX="8.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Area" Width="1.5" PointX="0.875" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Assunto" Width="1.5" PointX="0.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Curso" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Evento" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Grupo" Width="1.5" PointX="4.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Imagem" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.MasterEventos" Width="1.5" PointX="8.875" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Participante" Width="1.5" PointX="9.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Professor" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Questao" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.QuestaoEvento" Width="1.5" PointX="8.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.QuestaoGrupo" Width="1.5" PointX="11.125" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.Status" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.TipoEvento" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.TipoQuestao" Width="1.5" PointX="3.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="senaquizModel.MasterEventosOrdem" Width="1.5" PointX="7.5" PointY="15.625" IsExpanded="true" />
+        <AssociationConnector Association="senaquizModel.FK_Alternativa_Questao" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_QuestaoGrupo_Alternativa" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Assunto_Area" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Grupo_Assunto" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Questao_Assunto" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Aluno_Curso" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK__MasterEve__codEv__2A164134" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Evento_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Evento_TipoEvento" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Evento_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Grupo_Evento" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_QuestaoEvento_Evento" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK__MasterEve__codGr__2BFE89A6" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_QuestaoGrupo_Grupo" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Questao_Imagem" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK__MasterEve__codPr__29221CFB" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Questao_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_Questao_TipoQuestao1" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_QuestaoEvento_Questao" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.FK_QuestaoEvento_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.EventoAssunto" ManuallyRouted="false" />
+        <AssociationConnector Association="senaquizModel.ParticipanteGrupo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

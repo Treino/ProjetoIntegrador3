@@ -1,0 +1,1388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="senaquizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alternativa">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+            <PropertyRef Name="codAlternativa" />
+          </Key>
+          <Property Name="codQuestao" Type="int" Nullable="false" />
+          <Property Name="codAlternativa" Type="tinyint" Nullable="false" />
+          <Property Name="textoAlternativa" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="correta" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="codArea" />
+          </Key>
+          <Property Name="codArea" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="Assunto">
+          <Key>
+            <PropertyRef Name="codAssunto" />
+          </Key>
+          <Property Name="codAssunto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="60" />
+          <Property Name="codArea" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="codCurso" />
+          </Key>
+          <Property Name="codCurso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nmCurso" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="codEvento" />
+          </Key>
+          <Property Name="codEvento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="data" Type="smalldatetime" Nullable="false" />
+          <Property Name="codTipoEvento" Type="tinyint" Nullable="false" />
+          <Property Name="codStatus" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="codProfessor" Type="smallint" Nullable="false" />
+          <Property Name="identificador" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventoAssunto">
+          <Key>
+            <PropertyRef Name="codEvento" />
+            <PropertyRef Name="codAssunto" />
+          </Key>
+          <Property Name="codEvento" Type="int" Nullable="false" />
+          <Property Name="codAssunto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="codGrupo" />
+          </Key>
+          <Property Name="codGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codEvento" Type="int" Nullable="false" />
+          <Property Name="nmGrupo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="codAssunto" Type="int" />
+          <Property Name="codLider" Type="int" Nullable="false" />
+          <Property Name="finalizado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Imagem">
+          <Key>
+            <PropertyRef Name="codImagem" />
+          </Key>
+          <Property Name="codImagem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tituloImagem" Type="varchar" MaxLength="50" />
+          <Property Name="bitmapImagem" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterEventos">
+          <Key>
+            <PropertyRef Name="codToken" />
+          </Key>
+          <Property Name="codToken" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codProfessor" Type="smallint" />
+          <Property Name="token" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="concedidoEm" Type="datetime" Nullable="false" />
+          <Property Name="expiraEm" Type="datetime" Nullable="false" />
+          <Property Name="codEvento" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'senaquiz.dbo.MasterEventosOrdem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MasterEventosOrdem">
+          <Key>
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="ordem" />
+          </Key>
+          <Property Name="codGrupo" Type="int" Nullable="false" />
+          <Property Name="ordem" Type="tinyint" Nullable="false" />
+          <Property Name="codConexao" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Participante">
+          <Key>
+            <PropertyRef Name="codParticipante" />
+          </Key>
+          <Property Name="codParticipante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nmParticipante" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="codCurso" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="senha" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParticipanteGrupo">
+          <Key>
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="codParticipante" />
+          </Key>
+          <Property Name="codGrupo" Type="int" Nullable="false" />
+          <Property Name="codParticipante" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="codProfessor" />
+          </Key>
+          <Property Name="codProfessor" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="senha" Type="varbinary(max)" />
+          <Property Name="idSenac" Type="char" MaxLength="6" />
+          <Property Name="tipo" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Questao">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+          </Key>
+          <Property Name="codQuestao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="textoQuestao" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="codAssunto" Type="int" Nullable="false" />
+          <Property Name="codImagem" Type="int" />
+          <Property Name="codTipoQuestao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="codProfessor" Type="smallint" Nullable="false" />
+          <Property Name="ativo" Type="bit" Nullable="false" />
+          <Property Name="dificuldade" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestaoEvento">
+          <Key>
+            <PropertyRef Name="codEvento" />
+            <PropertyRef Name="codQuestao" />
+          </Key>
+          <Property Name="codEvento" Type="int" Nullable="false" />
+          <Property Name="codQuestao" Type="int" Nullable="false" />
+          <Property Name="codStatus" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="tempo" Type="datetime" />
+        </EntityType>
+        <EntityType Name="QuestaoGrupo">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+            <PropertyRef Name="codAlternativa" />
+            <PropertyRef Name="codGrupo" />
+          </Key>
+          <Property Name="codQuestao" Type="int" Nullable="false" />
+          <Property Name="codAlternativa" Type="tinyint" Nullable="false" />
+          <Property Name="codGrupo" Type="int" Nullable="false" />
+          <Property Name="tempo" Type="datetime" />
+          <Property Name="textoResp" Type="varchar" MaxLength="100" />
+          <Property Name="correta" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="codStatus" />
+          </Key>
+          <Property Name="codStatus" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="descStatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoEvento">
+          <Key>
+            <PropertyRef Name="codTipoEvento" />
+          </Key>
+          <Property Name="codTipoEvento" Type="tinyint" Nullable="false" />
+          <Property Name="descTipoEvento" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoQuestao">
+          <Key>
+            <PropertyRef Name="codTipoQuestao" />
+          </Key>
+          <Property Name="codTipoQuestao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__MasterEve__codEv__2A164134">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="0..1" />
+          <End Role="MasterEventos" Type="Self.MasterEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="MasterEventos">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MasterEve__codGr__2BFE89A6">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="MasterEventosOrdem" Type="Self.MasterEventosOrdem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="codGrupo" />
+            </Principal>
+            <Dependent Role="MasterEventosOrdem">
+              <PropertyRef Name="codGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MasterEve__codPr__29221CFB">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="0..1" />
+          <End Role="MasterEventos" Type="Self.MasterEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="MasterEventos">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alternativa_Questao">
+          <End Role="Questao" Type="Self.Questao" Multiplicity="1" />
+          <End Role="Alternativa" Type="Self.Alternativa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questao">
+              <PropertyRef Name="codQuestao" />
+            </Principal>
+            <Dependent Role="Alternativa">
+              <PropertyRef Name="codQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Participante" Type="Self.Participante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="codCurso" />
+            </Principal>
+            <Dependent Role="Participante">
+              <PropertyRef Name="codCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assunto_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="codArea" />
+            </Principal>
+            <Dependent Role="Assunto">
+              <PropertyRef Name="codArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssuntoEvento_Assunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="1" />
+          <End Role="EventoAssunto" Type="Self.EventoAssunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assunto">
+              <PropertyRef Name="codAssunto" />
+            </Principal>
+            <Dependent Role="EventoAssunto">
+              <PropertyRef Name="codAssunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssuntoEvento_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="EventoAssunto" Type="Self.EventoAssunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="EventoAssunto">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="codStatus" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_TipoEvento">
+          <End Role="TipoEvento" Type="Self.TipoEvento" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="codTipoEvento" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Assunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assunto">
+              <PropertyRef Name="codAssunto" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="codAssunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipanteGrupo_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="ParticipanteGrupo" Type="Self.ParticipanteGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="codGrupo" />
+            </Principal>
+            <Dependent Role="ParticipanteGrupo">
+              <PropertyRef Name="codGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParticipanteGrupo_Participante">
+          <End Role="Participante" Type="Self.Participante" Multiplicity="1" />
+          <End Role="ParticipanteGrupo" Type="Self.ParticipanteGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participante">
+              <PropertyRef Name="codParticipante" />
+            </Principal>
+            <Dependent Role="ParticipanteGrupo">
+              <PropertyRef Name="codParticipante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Assunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assunto">
+              <PropertyRef Name="codAssunto" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codAssunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="codImagem" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codImagem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_TipoQuestao1">
+          <End Role="TipoQuestao" Type="Self.TipoQuestao" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoQuestao">
+              <PropertyRef Name="codTipoQuestao" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codTipoQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Usuario">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Questao">
+          <End Role="Questao" Type="Self.Questao" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questao">
+              <PropertyRef Name="codQuestao" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="codStatus" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoGrupo_Alternativa">
+          <End Role="Alternativa" Type="Self.Alternativa" Multiplicity="1" />
+          <End Role="QuestaoGrupo" Type="Self.QuestaoGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternativa">
+              <PropertyRef Name="codQuestao" />
+              <PropertyRef Name="codAlternativa" />
+            </Principal>
+            <Dependent Role="QuestaoGrupo">
+              <PropertyRef Name="codQuestao" />
+              <PropertyRef Name="codAlternativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoGrupo_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="QuestaoGrupo" Type="Self.QuestaoGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="codGrupo" />
+            </Principal>
+            <Dependent Role="QuestaoGrupo">
+              <PropertyRef Name="codGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="senaquizModelStoreContainer">
+          <EntitySet Name="Alternativa" EntityType="Self.Alternativa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Assunto" EntityType="Self.Assunto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventoAssunto" EntityType="Self.EventoAssunto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagem" EntityType="Self.Imagem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterEventos" EntityType="Self.MasterEventos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participante" EntityType="Self.Participante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParticipanteGrupo" EntityType="Self.ParticipanteGrupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Professor" EntityType="Self.Professor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questao" EntityType="Self.Questao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestaoEvento" EntityType="Self.QuestaoEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestaoGrupo" EntityType="Self.QuestaoGrupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoEvento" EntityType="Self.TipoEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoQuestao" EntityType="Self.TipoQuestao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterEventosOrdem" EntityType="Self.MasterEventosOrdem" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MasterEventosOrdem].[codGrupo] AS [codGrupo], 
+    [MasterEventosOrdem].[ordem] AS [ordem], 
+    [MasterEventosOrdem].[codConexao] AS [codConexao]
+    FROM [dbo].[MasterEventosOrdem] AS [MasterEventosOrdem]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__MasterEve__codEv__2A164134" Association="Self.FK__MasterEve__codEv__2A164134">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="MasterEventos" EntitySet="MasterEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MasterEve__codGr__2BFE89A6" Association="Self.FK__MasterEve__codGr__2BFE89A6">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="MasterEventosOrdem" EntitySet="MasterEventosOrdem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MasterEve__codPr__29221CFB" Association="Self.FK__MasterEve__codPr__29221CFB">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="MasterEventos" EntitySet="MasterEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alternativa_Questao" Association="Self.FK_Alternativa_Questao">
+            <End Role="Questao" EntitySet="Questao" />
+            <End Role="Alternativa" EntitySet="Alternativa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Curso" Association="Self.FK_Aluno_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Participante" EntitySet="Participante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assunto_Area" Association="Self.FK_Assunto_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Assunto" EntitySet="Assunto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssuntoEvento_Assunto" Association="Self.FK_AssuntoEvento_Assunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="EventoAssunto" EntitySet="EventoAssunto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssuntoEvento_Evento" Association="Self.FK_AssuntoEvento_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="EventoAssunto" EntitySet="EventoAssunto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Status" Association="Self.FK_Evento_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_TipoEvento" Association="Self.FK_Evento_TipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario" Association="Self.FK_Evento_Usuario">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Assunto" Association="Self.FK_Grupo_Assunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Evento" Association="Self.FK_Grupo_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipanteGrupo_Grupo" Association="Self.FK_ParticipanteGrupo_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="ParticipanteGrupo" EntitySet="ParticipanteGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParticipanteGrupo_Participante" Association="Self.FK_ParticipanteGrupo_Participante">
+            <End Role="Participante" EntitySet="Participante" />
+            <End Role="ParticipanteGrupo" EntitySet="ParticipanteGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Assunto" Association="Self.FK_Questao_Assunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Imagem" Association="Self.FK_Questao_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_TipoQuestao1" Association="Self.FK_Questao_TipoQuestao1">
+            <End Role="TipoQuestao" EntitySet="TipoQuestao" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Usuario" Association="Self.FK_Questao_Usuario">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Evento" Association="Self.FK_QuestaoEvento_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Questao" Association="Self.FK_QuestaoEvento_Questao">
+            <End Role="Questao" EntitySet="Questao" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Status" Association="Self.FK_QuestaoEvento_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoGrupo_Alternativa" Association="Self.FK_QuestaoGrupo_Alternativa">
+            <End Role="Alternativa" EntitySet="Alternativa" />
+            <End Role="QuestaoGrupo" EntitySet="QuestaoGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoGrupo_Grupo" Association="Self.FK_QuestaoGrupo_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="QuestaoGrupo" EntitySet="QuestaoGrupo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="senaquizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alternativa">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+            <PropertyRef Name="codAlternativa" />
+          </Key>
+          <Property Name="codQuestao" Type="Int32" Nullable="false" />
+          <Property Name="codAlternativa" Type="Byte" Nullable="false" />
+          <Property Name="textoAlternativa" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correta" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_Alternativa_Questao" FromRole="Alternativa" ToRole="Questao" />
+          <NavigationProperty Name="QuestaoGrupo" Relationship="Self.FK_QuestaoGrupo_Alternativa" FromRole="Alternativa" ToRole="QuestaoGrupo" />
+        </EntityType>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="codArea" />
+          </Key>
+          <Property Name="codArea" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assunto" Relationship="Self.FK_Assunto_Area" FromRole="Area" ToRole="Assunto" />
+        </EntityType>
+        <EntityType Name="Assunto">
+          <Key>
+            <PropertyRef Name="codAssunto" />
+          </Key>
+          <Property Name="codAssunto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="codArea" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_Assunto_Area" FromRole="Assunto" ToRole="Area" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Assunto" FromRole="Assunto" ToRole="Grupo" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_Questao_Assunto" FromRole="Assunto" ToRole="Questao" />
+          <NavigationProperty Name="Evento" Relationship="Self.EventoAssunto" FromRole="Assunto" ToRole="Evento" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="codCurso" />
+          </Key>
+          <Property Name="codCurso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nmCurso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Participante" Relationship="Self.FK_Aluno_Curso" FromRole="Curso" ToRole="Participante" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="codEvento" />
+          </Key>
+          <Property Name="codEvento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="codTipoEvento" Type="Byte" Nullable="false" />
+          <Property Name="codStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="codProfessor" Type="Int16" Nullable="false" />
+          <Property Name="identificador" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MasterEventos" Relationship="Self.FK__MasterEve__codEv__2A164134" FromRole="Evento" ToRole="MasterEventos" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Evento_Status" FromRole="Evento" ToRole="Status" />
+          <NavigationProperty Name="TipoEvento" Relationship="Self.FK_Evento_TipoEvento" FromRole="Evento" ToRole="TipoEvento" />
+          <NavigationProperty Name="Professor" Relationship="Self.FK_Evento_Usuario" FromRole="Evento" ToRole="Professor" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Evento" FromRole="Evento" ToRole="Grupo" />
+          <NavigationProperty Name="QuestaoEvento" Relationship="Self.FK_QuestaoEvento_Evento" FromRole="Evento" ToRole="QuestaoEvento" />
+          <NavigationProperty Name="Assunto" Relationship="Self.EventoAssunto" FromRole="Evento" ToRole="Assunto" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="codGrupo" />
+          </Key>
+          <Property Name="codGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codEvento" Type="Int32" Nullable="false" />
+          <Property Name="nmGrupo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codAssunto" Type="Int32" />
+          <Property Name="codLider" Type="Int32" Nullable="false" />
+          <Property Name="finalizado" Type="Boolean" />
+          <NavigationProperty Name="Assunto" Relationship="Self.FK_Grupo_Assunto" FromRole="Grupo" ToRole="Assunto" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Grupo_Evento" FromRole="Grupo" ToRole="Evento" />
+          <NavigationProperty Name="MasterEventosOrdem" Relationship="Self.FK__MasterEve__codGr__2BFE89A6" FromRole="Grupo" ToRole="MasterEventosOrdem" />
+          <NavigationProperty Name="QuestaoGrupo" Relationship="Self.FK_QuestaoGrupo_Grupo" FromRole="Grupo" ToRole="QuestaoGrupo" />
+          <NavigationProperty Name="Participante" Relationship="Self.ParticipanteGrupo" FromRole="Grupo" ToRole="Participante" />
+        </EntityType>
+        <EntityType Name="Imagem">
+          <Key>
+            <PropertyRef Name="codImagem" />
+          </Key>
+          <Property Name="codImagem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tituloImagem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bitmapImagem" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_Questao_Imagem" FromRole="Imagem" ToRole="Questao" />
+        </EntityType>
+        <EntityType Name="MasterEventos">
+          <Key>
+            <PropertyRef Name="codToken" />
+          </Key>
+          <Property Name="codToken" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codProfessor" Type="Int16" />
+          <Property Name="token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="concedidoEm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expiraEm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="codEvento" Type="Int32" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK__MasterEve__codEv__2A164134" FromRole="MasterEventos" ToRole="Evento" />
+          <NavigationProperty Name="Professor" Relationship="Self.FK__MasterEve__codPr__29221CFB" FromRole="MasterEventos" ToRole="Professor" />
+        </EntityType>
+        <EntityType Name="Participante">
+          <Key>
+            <PropertyRef Name="codParticipante" />
+          </Key>
+          <Property Name="codParticipante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nmParticipante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codCurso" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Aluno_Curso" FromRole="Participante" ToRole="Curso" />
+          <NavigationProperty Name="Grupo" Relationship="Self.ParticipanteGrupo" FromRole="Participante" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Professor">
+          <Key>
+            <PropertyRef Name="codProfessor" />
+          </Key>
+          <Property Name="codProfessor" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="idSenac" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Evento_Usuario" FromRole="Professor" ToRole="Evento" />
+          <NavigationProperty Name="MasterEventos" Relationship="Self.FK__MasterEve__codPr__29221CFB" FromRole="Professor" ToRole="MasterEventos" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_Questao_Usuario" FromRole="Professor" ToRole="Questao" />
+        </EntityType>
+        <EntityType Name="Questao">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+          </Key>
+          <Property Name="codQuestao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="textoQuestao" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codAssunto" Type="Int32" Nullable="false" />
+          <Property Name="codImagem" Type="Int32" />
+          <Property Name="codTipoQuestao" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="codProfessor" Type="Int16" Nullable="false" />
+          <Property Name="ativo" Type="Boolean" Nullable="false" />
+          <Property Name="dificuldade" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Alternativa" Relationship="Self.FK_Alternativa_Questao" FromRole="Questao" ToRole="Alternativa" />
+          <NavigationProperty Name="Assunto" Relationship="Self.FK_Questao_Assunto" FromRole="Questao" ToRole="Assunto" />
+          <NavigationProperty Name="Imagem" Relationship="Self.FK_Questao_Imagem" FromRole="Questao" ToRole="Imagem" />
+          <NavigationProperty Name="Professor" Relationship="Self.FK_Questao_Usuario" FromRole="Questao" ToRole="Professor" />
+          <NavigationProperty Name="TipoQuestao" Relationship="Self.FK_Questao_TipoQuestao1" FromRole="Questao" ToRole="TipoQuestao" />
+          <NavigationProperty Name="QuestaoEvento" Relationship="Self.FK_QuestaoEvento_Questao" FromRole="Questao" ToRole="QuestaoEvento" />
+        </EntityType>
+        <EntityType Name="QuestaoEvento">
+          <Key>
+            <PropertyRef Name="codEvento" />
+            <PropertyRef Name="codQuestao" />
+          </Key>
+          <Property Name="codEvento" Type="Int32" Nullable="false" />
+          <Property Name="codQuestao" Type="Int32" Nullable="false" />
+          <Property Name="codStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tempo" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_QuestaoEvento_Evento" FromRole="QuestaoEvento" ToRole="Evento" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_QuestaoEvento_Questao" FromRole="QuestaoEvento" ToRole="Questao" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_QuestaoEvento_Status" FromRole="QuestaoEvento" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="QuestaoGrupo">
+          <Key>
+            <PropertyRef Name="codQuestao" />
+            <PropertyRef Name="codAlternativa" />
+            <PropertyRef Name="codGrupo" />
+          </Key>
+          <Property Name="codQuestao" Type="Int32" Nullable="false" />
+          <Property Name="codAlternativa" Type="Byte" Nullable="false" />
+          <Property Name="codGrupo" Type="Int32" Nullable="false" />
+          <Property Name="tempo" Type="DateTime" Precision="3" />
+          <Property Name="textoResp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correta" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Alternativa" Relationship="Self.FK_QuestaoGrupo_Alternativa" FromRole="QuestaoGrupo" ToRole="Alternativa" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_QuestaoGrupo_Grupo" FromRole="QuestaoGrupo" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="codStatus" />
+          </Key>
+          <Property Name="codStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="descStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Evento_Status" FromRole="Status" ToRole="Evento" />
+          <NavigationProperty Name="QuestaoEvento" Relationship="Self.FK_QuestaoEvento_Status" FromRole="Status" ToRole="QuestaoEvento" />
+        </EntityType>
+        <EntityType Name="TipoEvento">
+          <Key>
+            <PropertyRef Name="codTipoEvento" />
+          </Key>
+          <Property Name="codTipoEvento" Type="Byte" Nullable="false" />
+          <Property Name="descTipoEvento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK_Evento_TipoEvento" FromRole="TipoEvento" ToRole="Evento" />
+        </EntityType>
+        <EntityType Name="TipoQuestao">
+          <Key>
+            <PropertyRef Name="codTipoQuestao" />
+          </Key>
+          <Property Name="codTipoQuestao" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Questao" Relationship="Self.FK_Questao_TipoQuestao1" FromRole="TipoQuestao" ToRole="Questao" />
+        </EntityType>
+        <EntityType Name="MasterEventosOrdem">
+          <Key>
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="ordem" />
+          </Key>
+          <Property Name="codGrupo" Type="Int32" Nullable="false" />
+          <Property Name="ordem" Type="Byte" Nullable="false" />
+          <Property Name="codConexao" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK__MasterEve__codGr__2BFE89A6" FromRole="MasterEventosOrdem" ToRole="Grupo" />
+        </EntityType>
+        <Association Name="FK_Alternativa_Questao">
+          <End Role="Questao" Type="Self.Questao" Multiplicity="1" />
+          <End Role="Alternativa" Type="Self.Alternativa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questao">
+              <PropertyRef Name="codQuestao" />
+            </Principal>
+            <Dependent Role="Alternativa">
+              <PropertyRef Name="codQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoGrupo_Alternativa">
+          <End Role="Alternativa" Type="Self.Alternativa" Multiplicity="1" />
+          <End Role="QuestaoGrupo" Type="Self.QuestaoGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alternativa">
+              <PropertyRef Name="codQuestao" />
+              <PropertyRef Name="codAlternativa" />
+            </Principal>
+            <Dependent Role="QuestaoGrupo">
+              <PropertyRef Name="codQuestao" />
+              <PropertyRef Name="codAlternativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assunto_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="codArea" />
+            </Principal>
+            <Dependent Role="Assunto">
+              <PropertyRef Name="codArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Assunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assunto">
+              <PropertyRef Name="codAssunto" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="codAssunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Assunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assunto">
+              <PropertyRef Name="codAssunto" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codAssunto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Participante" Type="Self.Participante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="codCurso" />
+            </Principal>
+            <Dependent Role="Participante">
+              <PropertyRef Name="codCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MasterEve__codEv__2A164134">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="0..1" />
+          <End Role="MasterEventos" Type="Self.MasterEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="MasterEventos">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="codStatus" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_TipoEvento">
+          <End Role="TipoEvento" Type="Self.TipoEvento" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="codTipoEvento" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evento_Usuario">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="codEvento" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MasterEve__codGr__2BFE89A6">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="MasterEventosOrdem" Type="Self.MasterEventosOrdem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="codGrupo" />
+            </Principal>
+            <Dependent Role="MasterEventosOrdem">
+              <PropertyRef Name="codGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoGrupo_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="QuestaoGrupo" Type="Self.QuestaoGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="codGrupo" />
+            </Principal>
+            <Dependent Role="QuestaoGrupo">
+              <PropertyRef Name="codGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Imagem">
+          <End Role="Imagem" Type="Self.Imagem" Multiplicity="0..1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Imagem">
+              <PropertyRef Name="codImagem" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codImagem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MasterEve__codPr__29221CFB">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="0..1" />
+          <End Role="MasterEventos" Type="Self.MasterEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="MasterEventos">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_Usuario">
+          <End Role="Professor" Type="Self.Professor" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professor">
+              <PropertyRef Name="codProfessor" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codProfessor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questao_TipoQuestao1">
+          <End Role="TipoQuestao" Type="Self.TipoQuestao" Multiplicity="1" />
+          <End Role="Questao" Type="Self.Questao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoQuestao">
+              <PropertyRef Name="codTipoQuestao" />
+            </Principal>
+            <Dependent Role="Questao">
+              <PropertyRef Name="codTipoQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Questao">
+          <End Role="Questao" Type="Self.Questao" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questao">
+              <PropertyRef Name="codQuestao" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codQuestao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestaoEvento_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="QuestaoEvento" Type="Self.QuestaoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="codStatus" />
+            </Principal>
+            <Dependent Role="QuestaoEvento">
+              <PropertyRef Name="codStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventoAssunto">
+          <End Role="Assunto" Type="Self.Assunto" Multiplicity="*" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+        </Association>
+        <Association Name="ParticipanteGrupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <End Role="Participante" Type="Self.Participante" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entidades" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alternativa" EntityType="Self.Alternativa" />
+          <EntitySet Name="Area" EntityType="Self.Area" />
+          <EntitySet Name="Assunto" EntityType="Self.Assunto" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="Imagem" EntityType="Self.Imagem" />
+          <EntitySet Name="MasterEventos" EntityType="Self.MasterEventos" />
+          <EntitySet Name="Participante" EntityType="Self.Participante" />
+          <EntitySet Name="Professor" EntityType="Self.Professor" />
+          <EntitySet Name="Questao" EntityType="Self.Questao" />
+          <EntitySet Name="QuestaoEvento" EntityType="Self.QuestaoEvento" />
+          <EntitySet Name="QuestaoGrupo" EntityType="Self.QuestaoGrupo" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="TipoEvento" EntityType="Self.TipoEvento" />
+          <EntitySet Name="TipoQuestao" EntityType="Self.TipoQuestao" />
+          <EntitySet Name="MasterEventosOrdem" EntityType="Self.MasterEventosOrdem" />
+          <AssociationSet Name="FK_Alternativa_Questao" Association="Self.FK_Alternativa_Questao">
+            <End Role="Questao" EntitySet="Questao" />
+            <End Role="Alternativa" EntitySet="Alternativa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoGrupo_Alternativa" Association="Self.FK_QuestaoGrupo_Alternativa">
+            <End Role="Alternativa" EntitySet="Alternativa" />
+            <End Role="QuestaoGrupo" EntitySet="QuestaoGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assunto_Area" Association="Self.FK_Assunto_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Assunto" EntitySet="Assunto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Assunto" Association="Self.FK_Grupo_Assunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Assunto" Association="Self.FK_Questao_Assunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Curso" Association="Self.FK_Aluno_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Participante" EntitySet="Participante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MasterEve__codEv__2A164134" Association="Self.FK__MasterEve__codEv__2A164134">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="MasterEventos" EntitySet="MasterEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Status" Association="Self.FK_Evento_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_TipoEvento" Association="Self.FK_Evento_TipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evento_Usuario" Association="Self.FK_Evento_Usuario">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Evento" Association="Self.FK_Grupo_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Evento" Association="Self.FK_QuestaoEvento_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MasterEve__codGr__2BFE89A6" Association="Self.FK__MasterEve__codGr__2BFE89A6">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="MasterEventosOrdem" EntitySet="MasterEventosOrdem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoGrupo_Grupo" Association="Self.FK_QuestaoGrupo_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="QuestaoGrupo" EntitySet="QuestaoGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Imagem" Association="Self.FK_Questao_Imagem">
+            <End Role="Imagem" EntitySet="Imagem" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MasterEve__codPr__29221CFB" Association="Self.FK__MasterEve__codPr__29221CFB">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="MasterEventos" EntitySet="MasterEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_Usuario" Association="Self.FK_Questao_Usuario">
+            <End Role="Professor" EntitySet="Professor" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questao_TipoQuestao1" Association="Self.FK_Questao_TipoQuestao1">
+            <End Role="TipoQuestao" EntitySet="TipoQuestao" />
+            <End Role="Questao" EntitySet="Questao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Questao" Association="Self.FK_QuestaoEvento_Questao">
+            <End Role="Questao" EntitySet="Questao" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestaoEvento_Status" Association="Self.FK_QuestaoEvento_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="QuestaoEvento" EntitySet="QuestaoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="EventoAssunto" Association="Self.EventoAssunto">
+            <End Role="Assunto" EntitySet="Assunto" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="ParticipanteGrupo" Association="Self.ParticipanteGrupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Participante" EntitySet="Participante" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="senaquizModelStoreContainer" CdmEntityContainer="Entidades">
+          <EntitySetMapping Name="Alternativa">
+            <EntityTypeMapping TypeName="senaquizModel.Alternativa">
+              <MappingFragment StoreEntitySet="Alternativa">
+                <ScalarProperty Name="codQuestao" ColumnName="codQuestao" />
+                <ScalarProperty Name="codAlternativa" ColumnName="codAlternativa" />
+                <ScalarProperty Name="textoAlternativa" ColumnName="textoAlternativa" />
+                <ScalarProperty Name="correta" ColumnName="correta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Area">
+            <EntityTypeMapping TypeName="senaquizModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="codArea" ColumnName="codArea" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assunto">
+            <EntityTypeMapping TypeName="senaquizModel.Assunto">
+              <MappingFragment StoreEntitySet="Assunto">
+                <ScalarProperty Name="codAssunto" ColumnName="codAssunto" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="codArea" ColumnName="codArea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="senaquizModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="codCurso" ColumnName="codCurso" />
+                <ScalarProperty Name="nmCurso" ColumnName="nmCurso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evento">
+            <EntityTypeMapping TypeName="senaquizModel.Evento">
+              <MappingFragment StoreEntitySet="Evento">
+                <ScalarProperty Name="codEvento" ColumnName="codEvento" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="codTipoEvento" ColumnName="codTipoEvento" />
+                <ScalarProperty Name="codStatus" ColumnName="codStatus" />
+                <ScalarProperty Name="codProfessor" ColumnName="codProfessor" />
+                <ScalarProperty Name="identificador" ColumnName="identificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="senaquizModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+                <ScalarProperty Name="codEvento" ColumnName="codEvento" />
+                <ScalarProperty Name="nmGrupo" ColumnName="nmGrupo" />
+                <ScalarProperty Name="codAssunto" ColumnName="codAssunto" />
+                <ScalarProperty Name="codLider" ColumnName="codLider" />
+                <ScalarProperty Name="finalizado" ColumnName="finalizado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagem">
+            <EntityTypeMapping TypeName="senaquizModel.Imagem">
+              <MappingFragment StoreEntitySet="Imagem">
+                <ScalarProperty Name="codImagem" ColumnName="codImagem" />
+                <ScalarProperty Name="tituloImagem" ColumnName="tituloImagem" />
+                <ScalarProperty Name="bitmapImagem" ColumnName="bitmapImagem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterEventos">
+            <EntityTypeMapping TypeName="senaquizModel.MasterEventos">
+              <MappingFragment StoreEntitySet="MasterEventos">
+                <ScalarProperty Name="codToken" ColumnName="codToken" />
+                <ScalarProperty Name="codProfessor" ColumnName="codProfessor" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="concedidoEm" ColumnName="concedidoEm" />
+                <ScalarProperty Name="expiraEm" ColumnName="expiraEm" />
+                <ScalarProperty Name="codEvento" ColumnName="codEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participante">
+            <EntityTypeMapping TypeName="senaquizModel.Participante">
+              <MappingFragment StoreEntitySet="Participante">
+                <ScalarProperty Name="codParticipante" ColumnName="codParticipante" />
+                <ScalarProperty Name="nmParticipante" ColumnName="nmParticipante" />
+                <ScalarProperty Name="codCurso" ColumnName="codCurso" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professor">
+            <EntityTypeMapping TypeName="senaquizModel.Professor">
+              <MappingFragment StoreEntitySet="Professor">
+                <ScalarProperty Name="codProfessor" ColumnName="codProfessor" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="idSenac" ColumnName="idSenac" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questao">
+            <EntityTypeMapping TypeName="senaquizModel.Questao">
+              <MappingFragment StoreEntitySet="Questao">
+                <ScalarProperty Name="codQuestao" ColumnName="codQuestao" />
+                <ScalarProperty Name="textoQuestao" ColumnName="textoQuestao" />
+                <ScalarProperty Name="codAssunto" ColumnName="codAssunto" />
+                <ScalarProperty Name="codImagem" ColumnName="codImagem" />
+                <ScalarProperty Name="codTipoQuestao" ColumnName="codTipoQuestao" />
+                <ScalarProperty Name="codProfessor" ColumnName="codProfessor" />
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+                <ScalarProperty Name="dificuldade" ColumnName="dificuldade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestaoEvento">
+            <EntityTypeMapping TypeName="senaquizModel.QuestaoEvento">
+              <MappingFragment StoreEntitySet="QuestaoEvento">
+                <ScalarProperty Name="codEvento" ColumnName="codEvento" />
+                <ScalarProperty Name="codQuestao" ColumnName="codQuestao" />
+                <ScalarProperty Name="codStatus" ColumnName="codStatus" />
+                <ScalarProperty Name="tempo" ColumnName="tempo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestaoGrupo">
+            <EntityTypeMapping TypeName="senaquizModel.QuestaoGrupo">
+              <MappingFragment StoreEntitySet="QuestaoGrupo">
+                <ScalarProperty Name="codQuestao" ColumnName="codQuestao" />
+                <ScalarProperty Name="codAlternativa" ColumnName="codAlternativa" />
+                <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+                <ScalarProperty Name="tempo" ColumnName="tempo" />
+                <ScalarProperty Name="textoResp" ColumnName="textoResp" />
+                <ScalarProperty Name="correta" ColumnName="correta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="senaquizModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="codStatus" ColumnName="codStatus" />
+                <ScalarProperty Name="descStatus" ColumnName="descStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoEvento">
+            <EntityTypeMapping TypeName="senaquizModel.TipoEvento">
+              <MappingFragment StoreEntitySet="TipoEvento">
+                <ScalarProperty Name="codTipoEvento" ColumnName="codTipoEvento" />
+                <ScalarProperty Name="descTipoEvento" ColumnName="descTipoEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoQuestao">
+            <EntityTypeMapping TypeName="senaquizModel.TipoQuestao">
+              <MappingFragment StoreEntitySet="TipoQuestao">
+                <ScalarProperty Name="codTipoQuestao" ColumnName="codTipoQuestao" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterEventosOrdem">
+            <EntityTypeMapping TypeName="senaquizModel.MasterEventosOrdem">
+              <MappingFragment StoreEntitySet="MasterEventosOrdem">
+                <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+                <ScalarProperty Name="ordem" ColumnName="ordem" />
+                <ScalarProperty Name="codConexao" ColumnName="codConexao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EventoAssunto" TypeName="senaquizModel.EventoAssunto" StoreEntitySet="EventoAssunto">
+            <EndProperty Name="Assunto">
+              <ScalarProperty Name="codAssunto" ColumnName="codAssunto" />
+            </EndProperty>
+            <EndProperty Name="Evento">
+              <ScalarProperty Name="codEvento" ColumnName="codEvento" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ParticipanteGrupo" TypeName="senaquizModel.ParticipanteGrupo" StoreEntitySet="ParticipanteGrupo">
+            <EndProperty Name="Grupo">
+              <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+            </EndProperty>
+            <EndProperty Name="Participante">
+              <ScalarProperty Name="codParticipante" ColumnName="codParticipante" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

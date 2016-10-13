@@ -1,0 +1,44 @@
+﻿@model PROJETO3.Models.ParticipanteViewModel
+
+
+@{
+    ViewBag.Title = "Resultado";
+}
+
+<h2>Resultado</h2>
+
+@{
+    if (ViewBag.OK == "S")
+    {
+        <div class="container">
+            <div class="alert alert-success" role="alert">
+                <p>@Model.nmParticipante foi cadastrado com sucesso!</p>
+            </div>                        
+            <div>
+
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.nmParticipante)</dt>
+                        <dd>@Html.DisplayFor(model => model.nmParticipante)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.email)</dt>
+                        <dd>@Html.DisplayFor(model => model.email)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.Curso.nmCurso)</dt>
+                        <dd>@Html.DisplayFor(model => model.Curso.nmCurso)</dd>
+                </dl>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            <p>Ops, Houve um problema.... E @Model.nmParticipante não foi cadastrado no momento ... Por favor tente depois! </p>
+        </div>
+    }
+            
+ 
+<div>
+    @Html.ActionLink("RETORNAR À LISTA", "Index")
+</div>
+   
+    
+}
